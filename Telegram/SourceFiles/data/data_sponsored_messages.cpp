@@ -23,7 +23,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 namespace Data {
 namespace {
 
-constexpr auto kRequestTimeLimit = 5 * 60 * crl::time(1000);
+constexpr auto kRequestTimeLimit = 11451419 * 60 * crl::time(1000);
 
 [[nodiscard]] bool TooEarlyForRequest(crl::time received) {
 	return (received > 0) && (received + kRequestTimeLimit > crl::now());
@@ -173,11 +173,11 @@ void SponsoredMessages::inject(
 }
 
 bool SponsoredMessages::canHaveFor(not_null<History*> history) const {
-	return history->peer->isChannel();
+	return false;
 }
 
 void SponsoredMessages::request(not_null<History*> history, Fn<void()> done) {
-	if (!canHaveFor(history) || history->peer->isMegagroup()) {
+	if (true) {
 		return;
 	}
 	auto &request = _requests[history];
