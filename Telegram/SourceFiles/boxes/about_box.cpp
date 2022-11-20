@@ -43,7 +43,7 @@ rpl::producer<TextWithEntities> Text2() {
 		lt_github_link,
 		rpl::single(Ui::Text::Link(
 			"GitHub",
-			"https://github.com/TDesktop-x64/tdesktop")),
+			"https://github.com/ryank231231/tdesktop-fork")),
 		Ui::Text::WithEntities);
 }
 
@@ -93,27 +93,10 @@ void AboutBox::resizeEvent(QResizeEvent *e) {
 }
 
 void AboutBox::showVersionHistory() {
-	if (cRealAlphaVersion()) {
-		auto url = qsl("https://tdesktop.com/");
-		if (Platform::IsWindows32Bit()) {
-			url += qsl("win/%1.zip");
-		} else if (Platform::IsWindows64Bit()) {
-			url += qsl("win64/%1.zip");
-		} else if (Platform::IsMac()) {
-			url += qsl("mac/%1.zip");
-		} else if (Platform::IsLinux()) {
-			url += qsl("linux/%1.tar.xz");
-		} else {
-			Unexpected("Platform value.");
-		}
-		url = url.arg(qsl("talpha%1_%2").arg(cRealAlphaVersion()).arg(Core::countAlphaVersionSignature(cRealAlphaVersion())));
-
-		QGuiApplication::clipboard()->setText(url);
-
+	if (true) {
 		getDelegate()->show(
 			Ui::MakeInformBox(
-				"The link to the current private alpha "
-				"version of Telegram Desktop was copied to the clipboard."),
+				"WIP for Windows ARM64 builds!"),
 			Ui::LayerOption::CloseOther);
 	} else {
 		UrlClickHandler::Open(Core::App().changelogLink());
@@ -152,8 +135,8 @@ QString currentVersionText() {
 	} else if (AppBetaVersion) {
 		result += " beta";
 	}
-	if (Platform::IsWindows64Bit()) {
-		result += " x64";
+	if (true) {
+		result += " ARM64";
 	}
 	result += QString("｜v%1").arg(UpstreamVersion);
 	return result;
