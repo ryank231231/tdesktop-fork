@@ -14,7 +14,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 
 #define LOAD_SYMBOL(lib, name) ::base::Platform::LoadMethod(lib, #name, name)
 
-bool DirectXResolveCompiler();
+// bool DirectXResolveCompiler();
 
 namespace Platform {
 namespace Dlls {
@@ -68,7 +68,7 @@ SafeIniter kSafeIniter;
 } // namespace
 
 void CheckLoadedModules() {
-	if (DirectXResolveCompiler()) {
+	if (true) {
 		auto LibD3DCompiler = HMODULE();
 		if (GetModuleHandleEx(0, L"d3dcompiler_47.dll", &LibD3DCompiler)) {
 			constexpr auto kMaxPathLong = 32767;

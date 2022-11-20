@@ -29,7 +29,9 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include "window/themes/window_theme.h"
 #include "history/history.h"
 
+#if (QT_VERSION < QT_VERSION_CHECK(6,0,0))
 #include <QtWidgets/QDesktopWidget>
+#endif
 #include <QtWidgets/QStyleFactory>
 #include <QtWidgets/QApplication>
 #include <QtGui/QWindow>
@@ -68,7 +70,12 @@ private:
 	bool nativeEventFilter(
 		const QByteArray &eventType,
 		void *message,
-		long *result) override;
+	   #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+               long* *result
+	   #else
+               qintptr *result
+	   #endif
+	) override;
 
 	bool mainWindowEvent(
 		HWND hWnd,
@@ -101,7 +108,11 @@ EventFilter::EventFilter(not_null<MainWindow*> window) : _window(window) {
 bool EventFilter::nativeEventFilter(
 		const QByteArray &eventType,
 		void *message,
-		long *result) {
+	   #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+               long* *result) {
+	   #else
+               qintptr *result) {
+	   #endif
 	return Core::Sandbox::Instance().customEnterFromEventLoop([&] {
 		const auto msg = static_cast<MSG*>(message);
 		if (msg->hwnd == _window->psHwnd()

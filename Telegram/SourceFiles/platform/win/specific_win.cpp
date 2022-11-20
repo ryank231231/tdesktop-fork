@@ -28,7 +28,9 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 
 #include <QtCore/QOperatingSystemVersion>
 #include <QtWidgets/QApplication>
+#if (QT_VERSION < QT_VERSION_CHECK(6,0,0))
 #include <QtWidgets/QDesktopWidget>
+#endif
 #include <QtGui/QDesktopServices>
 #include <QtGui/QWindow>
 

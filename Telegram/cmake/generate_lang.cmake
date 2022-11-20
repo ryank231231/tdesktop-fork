@@ -20,7 +20,7 @@ function(generate_lang target_name lang_file)
     BYPRODUCTS
         ${gen_files}
     COMMAND
-        codegen_lang
+        "D:/tdesktop-aa64/tdesktop/build/x64/RelWithDebInfo/codegen_lang.exe"
         -o${gen_dst}
         ${lang_file}
     COMMENT "Generating lang (${target_name})"

@@ -90,10 +90,6 @@ Sandbox::Sandbox(
 }
 
 int Sandbox::start() {
-	if (!Core::UpdaterDisabled()) {
-		_updateChecker = std::make_unique<Core::UpdateChecker>();
-	}
-
 	{
 		const auto d = QFile::encodeName(QDir(cWorkingDir()).absolutePath());
 		char h[33] = { 0 };

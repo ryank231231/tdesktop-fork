@@ -13,6 +13,9 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include "base/weak_ptr.h"
 
 #include <QtNetwork/QAuthenticator>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QSslConfiguration>
+#include <QtNetwork/QSslPreSharedKeyAuthenticator>
 
 namespace {
 

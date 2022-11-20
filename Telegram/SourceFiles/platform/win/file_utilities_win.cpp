@@ -23,6 +23,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include <Shlwapi.h>
 #include <Windowsx.h>
 
+#if (QT_VERSION > QT_VERSION_CHECK(6,0,0))
+#include <QStandardPaths>
+#endif
+
 HBITMAP qt_pixmapToWinHBITMAP(const QPixmap &, int hbitmapFormat);
 
 namespace Platform {

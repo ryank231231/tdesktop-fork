@@ -7,6 +7,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 */
 #pragma once
 
+#define TDESKTOP_DISABLE_AUTOUPDATE
+
 #include "mtproto/dedicated_file_loader.h"
 
 namespace Main {

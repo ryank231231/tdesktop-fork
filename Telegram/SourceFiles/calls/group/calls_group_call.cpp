@@ -39,6 +39,8 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include <QtCore/QJsonObject>
 #include <QtCore/QJsonArray>
 #include <QtCore/QUrlQuery>
+#include <QtCore/QCryptographicHash>
+
 #include <QtNetwork/QNetworkAccessManager>
 
 namespace Calls {
