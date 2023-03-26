@@ -31,7 +31,7 @@ inline bool operator==(
 		&& (a.p == b.p);
 }
 
-using CloudPasswordAlgo = std::variant<v::null_t, CloudPasswordAlgoModPow>;
+using CloudPasswordAlgo = std::variant<std::monostate, CloudPasswordAlgoModPow>;
 
 CloudPasswordAlgo ParseCloudPasswordAlgo(const MTPPasswordKdfAlgo &data);
 CloudPasswordAlgo ValidateNewCloudPasswordAlgo(CloudPasswordAlgo &&parsed);

@@ -5,6 +5,7 @@ the official desktop application for the Telegram messaging service.
 For license and copyright information please follow this link:
 https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 */
+#define _ALLOW_COROUTINE_ABI_MISMATCH
 #include "platform/win/windows_app_user_model_id.h"
 
 #include "platform/win/windows_dlls.h"

@@ -674,51 +674,7 @@ QString PanelController::defaultPhoneNumber() const {
 
 void PanelController::setupPassword() {
 	Expects(_panel != nullptr);
-
-	const auto &settings = _form->passwordSettings();
-	if (settings.unknownAlgo
-		|| v::is_null(settings.newAlgo)
-		|| v::is_null(settings.newSecureAlgo)) {
-		showUpdateAppBox();
-		return;
-	} else if (settings.request) {
-		showAskPassword();
-		return;
-	}
-
-	auto fields = PasscodeBox::CloudFields{
-		.mtp = PasscodeBox::CloudFields::Mtp{
-			.newAlgo = settings.newAlgo,
-			.newSecureSecretAlgo = settings.newSecureAlgo,
-		},
-		.hasRecovery = settings.hasRecovery,
-		.pendingResetDate = settings.pendingResetDate,
-	};
-
-	// MSVC x64 (non-LTO) Release build fails with a linker error:
-	// - unresolved external variant::variant(variant const &)
-	// It looks like a MSVC bug and this works like a workaround.
-	const auto force = fields.mtp.newSecureSecretAlgo;
-
-	auto box = show(Box<PasscodeBox>(&_form->window()->session(), fields));
-	box->newPasswordSet(
-	) | rpl::start_with_next([=](const QByteArray &password) {
-		if (password.isEmpty()) {
-			_form->reloadPassword();
-		} else {
-			_form->reloadAndSubmitPassword(password);
-		}
-	}, box->lifetime());
-
-	box->passwordReloadNeeded(
-	) | rpl::start_with_next([=] {
-		_form->reloadPassword();
-	}, box->lifetime());
-
-	box->clearUnconfirmedPassword(
-	) | rpl::start_with_next([=] {
-		_form->cancelPassword();
-	}, box->lifetime());
+	LOG(("WIP in ARM64 builds..."));
 }
 
 void PanelController::cancelPasswordSubmit() {

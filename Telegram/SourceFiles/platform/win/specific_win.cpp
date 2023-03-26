@@ -5,6 +5,7 @@ the official desktop application for the Telegram messaging service.
 For license and copyright information please follow this link:
 https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 */
+#define _ALLOW_COROUTINE_ABI_MISMATCH
 #include "platform/win/specific_win.h"
 
 #include "platform/win/main_window_win.h"
@@ -28,7 +29,9 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 
 #include <QtCore/QOperatingSystemVersion>
 #include <QtWidgets/QApplication>
+#if (QT_VERSION < QT_VERSION_CHECK(6,0,0))
 #include <QtWidgets/QDesktopWidget>
+#endif
 #include <QtGui/QDesktopServices>
 #include <QtGui/QWindow>
 

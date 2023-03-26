@@ -5,6 +5,7 @@ the official desktop application for the Telegram messaging service.
 For license and copyright information please follow this link:
 https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 */
+#define _ALLOW_COROUTINE_ABI_MISMATCH
 #include "platform/win/integration_win.h"
 
 #include "platform/platform_integration.h"
@@ -35,7 +36,11 @@ WindowsIntegration &WindowsIntegration::Instance() {
 bool WindowsIntegration::nativeEventFilter(
 		const QByteArray &eventType,
 		void *message,
-		long *result) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+	long** result) {
+#else
+	qintptr* result) {
+#endif
 	return Core::Sandbox::Instance().customEnterFromEventLoop([&] {
 		const auto msg = static_cast<MSG*>(message);
 		return processEvent(

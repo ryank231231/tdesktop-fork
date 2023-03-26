@@ -970,58 +970,7 @@ void FormController::checkSavedPasswordSettings(
 }
 
 void FormController::recoverPassword() {
-	if (!_password.hasRecovery) {
-		_view->show(Ui::MakeInformBox(tr::lng_signin_no_email_forgot()));
-		return;
-	} else if (_recoverRequestId) {
-		return;
-	}
-	_recoverRequestId = _api.request(MTPauth_RequestPasswordRecovery(
-	)).done([=](const MTPauth_PasswordRecovery &result) {
-		Expects(result.type() == mtpc_auth_passwordRecovery);
-
-		_recoverRequestId = 0;
-
-		const auto &data = result.c_auth_passwordRecovery();
-		const auto pattern = qs(data.vemail_pattern());
-		auto fields = PasscodeBox::CloudFields{
-			.mtp = PasscodeBox::CloudFields::Mtp {
-				.newAlgo = _password.newAlgo,
-				.newSecureSecretAlgo = _password.newSecureAlgo,
-			},
-			.hasRecovery = _password.hasRecovery,
-			.pendingResetDate = _password.pendingResetDate,
-		};
-
-		// MSVC x64 (non-LTO) Release build fails with a linker error:
-		// - unresolved external variant::variant(variant const &)
-		// It looks like a MSVC bug and this works like a workaround.
-		const auto force = fields.mtp.newSecureSecretAlgo;
-
-		const auto box = _view->show(Box<RecoverBox>(
-			&_controller->session().mtp(),
-			&_controller->session(),
-			pattern,
-			fields));
-		box->newPasswordSet(
-		) | rpl::start_with_next([=](const QByteArray &password) {
-			if (password.isEmpty()) {
-				reloadPassword();
-			} else {
-				reloadAndSubmitPassword(password);
-			}
-		}, box->lifetime());
-
-		box->recoveryExpired(
-		) | rpl::start_with_next([=] {
-			box->closeBox();
-		}, box->lifetime());
-	}).fail([=](const MTP::Error &error) {
-		_recoverRequestId = 0;
-		_view->show(Ui::MakeInformBox(Lang::Hard::ServerError()
-			+ '\n'
-			+ error.type()));
-	}).send();
+	LOG(("WIP in ARM64 builds..."));
 }
 
 void FormController::reloadPassword() {

@@ -5,6 +5,7 @@ the official desktop application for the Telegram messaging service.
 For license and copyright information please follow this link:
 https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 */
+#define _ALLOW_COROUTINE_ABI_MISMATCH
 #include "platform/win/windows_dlls.h"
 
 #include "base/platform/win/base_windows_safe_library.h"
@@ -67,8 +68,11 @@ SafeIniter kSafeIniter;
 
 } // namespace
 
+HINSTANCE SafeLoadLibrary(LPCWSTR name, bool required);
+
 void CheckLoadedModules() {
-	if (DirectXResolveCompiler()) {
+	LoadLibraryW(L"d3dcompiler_47.dll");
+	if (true) {
 		auto LibD3DCompiler = HMODULE();
 		if (GetModuleHandleEx(0, L"d3dcompiler_47.dll", &LibD3DCompiler)) {
 			constexpr auto kMaxPathLong = 32767;

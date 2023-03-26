@@ -5,6 +5,7 @@ the official desktop application for the Telegram messaging service.
 For license and copyright information please follow this link:
 https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 */
+#define _ALLOW_COROUTINE_ABI_MISMATCH
 #include "platform/win/main_window_win.h"
 
 #include "styles/style_window.h"
@@ -30,7 +31,9 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include "window/window_controller.h"
 #include "history/history.h"
 
+#if (QT_VERSION < QT_VERSION_CHECK(6,0,0))
 #include <QtWidgets/QDesktopWidget>
+#endif
 #include <QtWidgets/QStyleFactory>
 #include <QtWidgets/QApplication>
 #include <QtGui/QWindow>
@@ -78,9 +81,14 @@ public:
 
 private:
 	bool nativeEventFilter(
-		const QByteArray &eventType,
-		void *message,
-		long *result) override;
+		const QByteArray& eventType,
+		void* message,
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+		long** result
+#else
+		qintptr* result
+#endif
+	) override;
 
 	bool mainWindowEvent(
 		HWND hWnd,
@@ -171,7 +179,11 @@ EventFilter::EventFilter(not_null<MainWindow*> window) : _window(window) {
 bool EventFilter::nativeEventFilter(
 		const QByteArray &eventType,
 		void *message,
-		long *result) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+	long** result) {
+#else
+	qintptr* result) {
+#endif
 	return Core::Sandbox::Instance().customEnterFromEventLoop([&] {
 		const auto msg = static_cast<MSG*>(message);
 		if (msg->hwnd == _window->psHwnd()
